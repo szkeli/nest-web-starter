@@ -1,0 +1,16 @@
+// 定义数据库的提供者为 PostgreSQL
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+// 以下写prisma schema
+model User {
+    id       Int    @id @default(autoincrement())
+    username String @unique
+    password String
+}
