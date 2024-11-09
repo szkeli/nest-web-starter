@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: xxx
+      DOCKER_PATH: xx/xx
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 请在项目secrets中配置以下变量
+      # REGISTRY：镜像地址
+      # REGISTRY_ACCOUNT：用户名
+      # REGISTRY_PASSWD：密码
+      # REGISTRY_REPO：镜像仓库
+      - name: Build & Push Image
+        run: |
+          docker login -u ${{ secrets.REGISTRY_ACCOUNT }} -p ${{ secrets.REGISTRY_PASSWD }} ${{ secrets.REGISTRY }}
+          export REGISTRY_PUSH_URL=${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:latest
+          docker build -t "$REGISTRY_PUSH_URL" -f ${{ env.DOCKER_PATH }} .
+          docker push "$REGISTRY_PUSH_URL"
