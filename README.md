@@ -4,7 +4,7 @@
 
 ### 模块
 
-已内置user模块，包括token解析具体需要自己再改，可以使用@GetMeta获取token的userId，详见 util/meta.ts 
+已内置user模块，包括token解析具体需要自己再改，可以使用@GetMeta获取token的userId，详见 util/meta.util.ts 
 
 ### 技术栈
 

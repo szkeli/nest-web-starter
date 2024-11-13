@@ -1,12 +1,35 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { ExampleModule } from './example/example.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { RedisModule } from './modules/redis/redis.module';
+import { AuthGuard } from './common/filter/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
+import config from './config';
 
 @Module({
-  imports: [UserModule, ExampleModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      expandVariables: true,
+      // 指定多个 env 文件时，第一个优先级最高
+      envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
+      load: [...Object.values(config)],
+    }),
+    PrismaModule,
+    RedisModule,
+    AuthModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      // 鉴权守卫
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}
