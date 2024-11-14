@@ -24,13 +24,15 @@ class ApiResultOptions {
  * @constructor
  */
 export function ApiResult(options?: ApiResultOptions) {
+  // 是否包装结果集
+  const wrapResult = process.env.SWAGGER_WRAP_RESPONSE === 'true';
   // 空数据响应
   if (!options) {
     return applyDecorators(
-      ApiExtraModels(ResultDto),
+      ApiExtraModels(wrapResult ? ResultDto : Object),
       ApiOkResponse({
         schema: {
-          allOf: [{ $ref: getSchemaPath(ResultDto) }],
+          allOf: [{ $ref: getSchemaPath(wrapResult ? ResultDto : Object) }],
         },
       }),
     );
@@ -78,11 +80,18 @@ export function ApiResult(options?: ApiResultOptions) {
         },
       };
 
+  const finalSchema = wrapResult
+    ? { ...dataSchema }
+    : { ...dataSchema.properties.data };
+
   return applyDecorators(
     ApiExtraModels(ResultDto, PaginationRespDto, options.type),
     ApiOkResponse({
       schema: {
-        allOf: [{ $ref: getSchemaPath(ResultDto) }, dataSchema],
+        allOf: [
+          { $ref: getSchemaPath(wrapResult ? ResultDto : Object) },
+          finalSchema,
+        ],
       },
     }),
   );
