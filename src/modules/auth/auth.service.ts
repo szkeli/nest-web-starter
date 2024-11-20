@@ -11,7 +11,7 @@ import {
   InvalidPasswordException,
   LoginStatusException,
 } from '../../common/exceptions/auth.exception';
-import * as CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';
 
 interface JwtTokenPayload {
   user: { id: number };

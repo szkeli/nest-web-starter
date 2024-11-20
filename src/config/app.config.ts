@@ -1,6 +1,5 @@
 import { ConfigType, registerAs } from '@nestjs/config';
 import { formatNumber } from '../common/util/string.util';
-import * as process from 'node:process';
 
 export const appRegToken = 'app';
 
