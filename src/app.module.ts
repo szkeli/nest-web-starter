@@ -12,6 +12,7 @@ import {
   AllExceptionsFilter,
   HttpExceptionFilter,
 } from './common/filter/exception.filter';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import {
     PrismaModule,
     RedisModule,
     AuthModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [

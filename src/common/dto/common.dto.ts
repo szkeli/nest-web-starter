@@ -34,7 +34,10 @@ export class ResultDto<T> {
    * 成功响应
    * @param data
    */
-  static success<T>(data?: T): ResultDto<T> {
+  static success<T>(data?: T): ResultDto<T> | T {
+    if (process.env.SWAGGER_WRAP_RESPONSE !== 'true') {
+      return data;
+    }
     return new ResultDto(ResultEnum.SUCCESS.code, ResultEnum.SUCCESS.msg, data);
   }
 

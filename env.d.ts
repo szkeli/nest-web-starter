@@ -15,6 +15,10 @@ declare global {
       REDIS_PASSWORD: string;
       REDIS_DB: string;
       REDIS_PREFIX: string;
+      FILE_DOMAIN: string;
+      UPLOAD_BASE_DIR: string;
+      UPLOAD_MAX_SIZE: string;
+      STATIC_PREFIX: string;
     }
   }
 }
