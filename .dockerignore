@@ -1,0 +1,16 @@
+# 忽略node_modules
+node_modules
+
+.git
+
+.idea
+.vscode
+
+# 忽略编译文件
+dist
+
+*.tar
+
+# Logs
+logs
+*.log

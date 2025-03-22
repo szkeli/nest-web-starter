@@ -38,3 +38,15 @@ pnpm prisma:migrate # 会根据src/db/prisma进行构建
 # 写入配置 .env.xx 中的 SQLITE_URL
 pnpm prisma:deploy 
 ```
+
+### 部署
+
+#### docker 
+构建镜像
+```
+docker build -t nest-web-starter:latest .
+```
+docker-compose启动
+```
+docker-compose -p nest-web up -d
+```
