@@ -4,7 +4,7 @@
 
 ### 模块
 
-已内置user模块，包括token解析具体需要自己再改，可以使用@GetMeta获取token的userId，详见 util/meta.ts 
+已内置user模块，包括token解析具体需要自己再改，可以使用@GetMeta获取token的userId，详见 util/meta.util.ts 
 
 ### 技术栈
 
@@ -37,4 +37,16 @@ pnpm prisma:migrate # 会根据src/db/prisma进行构建
 # 部署 prisma：
 # 写入配置 .env.xx 中的 SQLITE_URL
 pnpm prisma:deploy 
+```
+
+### 部署
+
+#### docker 
+构建镜像
+```
+docker build -t nest-web-starter:latest .
+```
+docker-compose启动
+```
+docker-compose -p nest-web up -d
 ```

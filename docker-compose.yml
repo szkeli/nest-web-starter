@@ -1,0 +1,47 @@
+version: '3'
+services:
+  nest-web-starter:
+    container_name: nest-web-starter
+    image: nest-web-starter:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - nest-web-starter-network
+    # 环境变量
+    environment:
+      - POSTGRES_URL=postgresql://postgres:postgres@postgres:5432/nest-web-starter # 数据库连接地址
+      - REDIS_HOST=redis # redis地址
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=
+      - REDIS_DB=0 # 选择的数据库索引
+      - REDIS_PREFIX=nest-web-starter # 缓存前缀
+    volumes:
+      - /root/nest-web-starter/backend/logs:/app/logs # 将容器内的日志目录挂载到宿主机
+
+  postgres:
+    image: postgres:16
+    container_name: nest-web-starter-postgres
+    ports:
+      - '55432:5432'
+    environment:
+      POSTGRES_USER: postgres # 定义数据库用户名
+      POSTGRES_PASSWORD: postgres # 定义数据库密码
+    volumes:
+      - /root/nest-web-starter/postgres/data:/var/lib/postgresql/data # 挂载数据库数据
+    networks:
+      - nest-web-starter-network
+
+  redis:
+    image: redis:7.4
+    container_name: nest-web-starter-redis
+    networks:
+      - nest-web-starter-network
+
+networks:
+  nest-web-starter-network:
